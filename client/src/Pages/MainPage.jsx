@@ -1,9 +1,19 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { FaCirclePlus } from "react-icons/fa6";
 import Actions from '../Components/Actions';
 import Delete from '../Components/Delete';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 const MainPage = () => {
+    // const [Mainalue , setMainvalue] = useState();
+    // const [Taxamount , setTaxamount] = useState();
+    // const [TotalAmount , setTotalamount] = useState();
+    const services = useSelector(state => state.service.services);
+
+    // const taxes = useSelector(state => state.taxes)
+    console.log("service", services)
+    // console.log("taxes", taxes)
+
     const navigate = useNavigate();
     return (
         <div className='h-screen relative  bg-gray-100'>
@@ -49,14 +59,13 @@ const MainPage = () => {
                 <div className='flex flex-row items-center'>
                     <input type='text' className='w-full mx-2 h-10 px-4 py-2 border rounded-lg focus:outline-none
                          focus:border-green-500' placeholder='Select services' />
-                    <div className='mr-2 ml-1' 
-                    onClick={() => navigate('./addservices')}
+                    <div className='mr-2 ml-1'
+                        onClick={() => navigate('./addservices')}
                     >
                         <FaCirclePlus className='text-2xl' />
                     </div>
                 </div>
             </div>
-            {/* product edit delete section */}
             <div className='mt-10'>
                 <div className="relative overflow-x-auto rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right ">
@@ -86,31 +95,34 @@ const MainPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="bg-white border-2">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                    Hotel
-                                </th>
-                                <td className="px-6 py-4">
-                                    1
-                                </td>
-                                <td className="px-6 py-4">
-                                    1200
-                                </td>
-                                <td className="px-6 py-4">
-                                    120
-                                </td>
-                                <td className="px-6 py-4">
-                                    194.40
-                                </td>
-                                <td className="px-6 py-4">
-                                    1274.40
-                                </td>
-                                <td className="px-6 py-4">
-                                    <Actions />
-                                    <Delete />
-                                </td>
-                            </tr>
+                            {services.map((service, index) => (
+                                <tr key={index} className="bg-white border-2">
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {service.servicetype}
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        1
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {service.sellingprice}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {service.discountvalue}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                      {service.taxamount}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {service.totalamount}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <Actions />
+                                        <Delete />
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
+
                     </table>
                 </div>
 
@@ -142,16 +154,16 @@ const MainPage = () => {
                 </div>
             </div>
 
-                <div className='flex absolute  right-0 '>
-                    <button className='w-20 h-8 font-bold py-1 text-blue-400 border
+            <div className='flex absolute  right-0 '>
+                <button className='w-20 h-8 font-bold py-1 text-blue-400 border
                      border-blue-400'>
-                        Cancel
-                    </button>
-                    <button className='w-16 h-8 ml-4 font-bold py-1 text-white
+                    Cancel
+                </button>
+                <button className='w-16 h-8 ml-4 font-bold py-1 text-white
                      bg-blue-400 border border-blue-400'>
-                        Save
-                    </button>
-                </div>
+                    Save
+                </button>
+            </div>
         </div>
     )
 }

@@ -20,9 +20,6 @@ const TaxModal = ({ onClick }) => {
             taxtype: taxType,
             status: status
           }));
-          
-
-      
     };
 
     return (

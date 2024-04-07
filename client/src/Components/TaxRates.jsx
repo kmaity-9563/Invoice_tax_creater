@@ -7,7 +7,7 @@ import {removeTax} from '../Redux/taxSlice'
 
 const TaxRatesComponents = () => {
     const dispatch = useDispatch()
-   const taxes =  useSelector(state => state.taxes);
+   const taxes =  useSelector(state => state.tax.taxes);
 
 // console.log(taxes)
 

@@ -1,33 +1,36 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
-  
-    service : [{
-        servicetype : 'hotel' ,
-        sellingprice : '1200',
-        discounttype : 'percentage',
-        discountvalue : '10',
+    services: [{
+        id: nanoid(),
+        servicetype: 'hotel',
+        sellingprice: '1200',
+        discounttype: 'percentage',
+        discountvalue: '100',
+        taxamount: '10',
+        totalamount: '1400',
     }]
 }
 
 export const serviceSlice = createSlice({
-    name : 'service' ,
-    initialState ,
-    reducers : {
-    addServices : (state , action) => {
-            const services = {
-                id : nanoid(),
-                servicetype : action.payload.servicetype,
-                sellingprice : action.payload.sellingprice ,
-                discounttype : action.payload.discounttype ,
-                discountvalue : action.payload.discountvalue
-            }
-            state.service.push(services);
-        } ,
-       
-    
+    name: 'service',
+    initialState,
+    reducers: {
+        addServices: (state, action) => {
+            const { servicetype, sellingprice, discounttype, 
+                discountvalue, taxamount, totalamount } = action.payload;
+            state.services.push({
+                id: nanoid(),
+                servicetype,
+                sellingprice,
+                discounttype,
+                discountvalue,
+                taxamount,
+                totalamount
+            });
+        }
     }
-})
+});
 
 export const { addServices } = serviceSlice.actions;
-export  default serviceSlice.reducer;
+export default serviceSlice.reducer;
