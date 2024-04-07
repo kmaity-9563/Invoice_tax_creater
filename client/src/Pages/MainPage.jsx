@@ -1,20 +1,24 @@
-import React , {useState} from 'react'
+import React, { useState } from 'react'
 import { FaCirclePlus } from "react-icons/fa6";
 import Actions from '../Components/Actions';
 import Delete from '../Components/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 const MainPage = () => {
-    // const [Mainalue , setMainvalue] = useState();
-    // const [Taxamount , setTaxamount] = useState();
-    // const [TotalAmount , setTotalamount] = useState();
     const services = useSelector(state => state.service.services);
-
-    // const taxes = useSelector(state => state.taxes)
     console.log("service", services)
-    // console.log("taxes", taxes)
-
     const navigate = useNavigate();
+    let totalPrice = 0;
+    let totalDiscount = 0;
+    let totalTax = 0;
+    services.forEach(service => {
+        totalPrice += service.sellingprice || 0;
+        totalDiscount += service.discountvalue || 0;
+        totalTax += service.taxamount || 0;
+    });
+    console.log("totalPrice", totalPrice)
+    console.log("totalDiscount", totalDiscount)
+    const totalAmount = totalPrice - totalDiscount + totalTax;
     return (
         <div className='h-screen relative  bg-gray-100'>
             <div className='text-left pt-2'>
@@ -101,7 +105,7 @@ const MainPage = () => {
                                         {service.servicetype}
                                     </th>
                                     <td className="px-6 py-4">
-                                        1
+                                        {service.quantity }
                                     </td>
                                     <td className="px-6 py-4">
                                         {service.sellingprice}
@@ -110,14 +114,19 @@ const MainPage = () => {
                                         {service.discountvalue}
                                     </td>
                                     <td className="px-6 py-4">
-                                      {service.taxamount}
+                                        {service.taxamount}
                                     </td>
                                     <td className="px-6 py-4">
                                         {service.totalamount}
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <Actions />
-                                        <Delete />
+                                    <td className="px-6 py-4 flex">
+                                        {service.totalamount && (
+                                            <>
+                                                <Actions />
+                                                <Delete />
+                                            </>
+                                        )}
+
                                     </td>
                                 </tr>
                             ))}
@@ -130,28 +139,30 @@ const MainPage = () => {
             </div>
             {/* card */}
             <div className='mt-10 ml-5'>
-                <div className='border border-gray-200 w-96'>
-                    <div className='flex justify-between p-2'>
-                        <div className='text-gray-500'>Amount</div>
-                        <div>₹ 1200.00</div>
+                {/* {services.map((service, index) => ( */}
+                    <div className='border border-gray-200 w-96'>
+                        <div className='flex justify-between p-2'>
+                            <div className='text-gray-500'>Amount</div>
+                            <div>₹{totalPrice}</div>
+                        </div>
+                        <div className='flex justify-between p-2'>
+                            <div className='text-gray-500'>Discount</div>
+                            <div> ₹{totalDiscount}</div>
+                        </div>
+                        <div className='flex justify-between p-2'>
+                            <div className='text-gray-500'>Tax</div>
+                            <div> ₹{totalTax}</div>
+                        </div>
+                        <div className='flex justify-between p-2'>
+                            <div className='text-gray-500'>Round off</div>
+                            <div>₹ 00</div>
+                        </div>
+                        <div className='flex justify-between p-2'>
+                            <div className='text-gray-500'>Total Amount</div>
+                            <div>  ₹{totalAmount}</div>
+                        </div>
                     </div>
-                    <div className='flex justify-between p-2'>
-                        <div className='text-gray-500'>Discount</div>
-                        <div> ₹120.00</div>
-                    </div>
-                    <div className='flex justify-between p-2'>
-                        <div className='text-gray-500'>Tax</div>
-                        <div> ₹194.40</div>
-                    </div>
-                    <div className='flex justify-between p-2'>
-                        <div className='text-gray-500'>Round off</div>
-                        <div>₹ 00</div>
-                    </div>
-                    <div className='flex justify-between p-2'>
-                        <div className='text-gray-500'>Total Amount</div>
-                        <div> ₹1274.40</div>
-                    </div>
-                </div>
+                {/* ))} */}
             </div>
 
             <div className='flex absolute  right-0 '>

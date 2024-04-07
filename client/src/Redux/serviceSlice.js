@@ -3,12 +3,13 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 const initialState = {
     services: [{
         id: nanoid(),
-        servicetype: 'hotel',
-        sellingprice: '1200',
-        discounttype: 'percentage',
-        discountvalue: '100',
-        taxamount: '10',
-        totalamount: '1400',
+        servicetype: '',
+        sellingprice: '',
+        discounttype: '',
+        discountvalue: '',
+        taxamount: '',
+        totalamount: '',
+        quantity : '',
     }]
 }
 
@@ -17,8 +18,7 @@ export const serviceSlice = createSlice({
     initialState,
     reducers: {
         addServices: (state, action) => {
-            const { servicetype, sellingprice, discounttype, 
-                discountvalue, taxamount, totalamount } = action.payload;
+            const { servicetype, sellingprice, discounttype, discountvalue, taxamount, totalamount , quantity} = action.payload;
             state.services.push({
                 id: nanoid(),
                 servicetype,
@@ -26,7 +26,8 @@ export const serviceSlice = createSlice({
                 discounttype,
                 discountvalue,
                 taxamount,
-                totalamount
+                totalamount ,
+                quantity
             });
         }
     }

@@ -11,6 +11,7 @@ const AddServices = () => {
     const [sellingPrice, setSellingPrice] = useState('');
     const [discountType, setDiscountType] = useState('percentage');
     const [discountValue, setDiscountValue] = useState('');
+    const [quantity, setQuantity] = useState()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const taxes = useSelector(state => state.tax.taxes);
@@ -42,7 +43,8 @@ const AddServices = () => {
             discounttype: discountType,
             discountvalue: parseFloat(discountValue),
             taxamount: taxAmount,
-            totalamount: totalAmount
+            totalamount: totalAmount ,
+            quantity : quantity
         };
         console.log("Servicedetails" , serviceDetails);
         dispatch(addServices(serviceDetails));
@@ -87,7 +89,7 @@ const AddServices = () => {
                         <option value='cash'>Cash</option>
                     </select>
                 </div>
-                <div className='col-span-1'>
+                <div className='col-span-1 mt-3'>
                     <div>Discount Value</div>
                     <input
                         type='text'
@@ -109,6 +111,16 @@ const AddServices = () => {
                             <option key={index} value={tax.id}>{tax.taxname} - {tax.taxpercentage}%</option>
                         ))}
                     </select>
+                </div>
+                <div className='col-span-1 mt-3'>
+                    <div>quantity</div>
+                    <input
+                        type='text'
+                        placeholder='1'
+                        className='border p-2 w-80 mx-4 bg-gray-200'
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                    />
                 </div>
             </div>
             <div className='flex absolute right-0 mr-4 mt-5'>

@@ -1,9 +1,10 @@
 import React from 'react'
+import { FaRegEdit } from "react-icons/fa";
 
 const Actions = () => {
   return (
-    <div>
-      Actions
+    <div className='text-xl p-1'>
+      <FaRegEdit />
     </div>
   )
 }
