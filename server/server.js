@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://koushikmaity9563:6Amz0AKdBXyqhwnn@cluster0.l73tib7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0' , {
+mongoose.connect(process.env.MONGODB_URL , {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })

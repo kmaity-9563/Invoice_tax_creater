@@ -9,8 +9,6 @@ const TaxRatesComponents = () => {
     const dispatch = useDispatch()
    const taxes =  useSelector(state => state.tax.taxes);
 
-// console.log(taxes)
-
     return (
         <div className="relative overflow-x-auto rounded-lg">
             <div className='text-left pt-2 flex justify-between'>

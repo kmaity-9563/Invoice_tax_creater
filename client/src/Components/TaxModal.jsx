@@ -10,10 +10,8 @@ const TaxModal = ({ onClick }) => {
     const [status, setStatus] = useState(false);
     const dispatch = useDispatch()
 
-
     const handleSave = (e) => {
         e.preventDefault();
-        // console.log(taxName , taxRate , taxType , status)
         dispatch(addTax({
             taxname: taxName,
             taxpercentage: taxRate,

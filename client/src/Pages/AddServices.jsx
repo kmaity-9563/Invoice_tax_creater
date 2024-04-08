@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TaxRatesComponents from '../Components/TaxRates';
 import {addServices} from '../Redux/serviceSlice'
-// import { useDispatch } from 'react-redux';
 
 const AddServices = () => {
     const [taxRate, setTaxRate] = useState(false);
