@@ -1,14 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-// Define mongoose schemas
-const userSchema = new mongoose.Schema({
+const taxSchema = new mongoose.Schema({
     userId: { type: String },
     taxName: { type: String },
-    tax: { type: Number }
+    taxRate: { type: Number }
 });
 
-const User = mongoose.model('User', userSchema);
+const Tax = mongoose.model('Tax', taxSchema);
 
-module.exports = {
-    User
-};
+module.exports = Tax;

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { FaCirclePlus } from "react-icons/fa6";
 import Actions from '../Components/Actions';
 import Delete from '../Components/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 const MainPage = () => {
     const services = useSelector(state => state.service.services);
-    console.log("service", services)
+    const taxes = useSelector(state => state.tax);
+    console.log(taxes)
     const navigate = useNavigate();
     let totalPrice = 0;
     let totalDiscount = 0;
@@ -16,9 +18,22 @@ const MainPage = () => {
         totalDiscount += service.discountvalue || 0;
         totalTax += service.taxamount || 0;
     });
-    console.log("totalPrice", totalPrice)
-    console.log("totalDiscount", totalDiscount)
+
     const totalAmount = totalPrice - totalDiscount + totalTax;
+    console.log(services)
+    useEffect(() => {
+        console.log("posting handel")
+        console.log( services.id , taxes.taxname , taxes.taxpercentage )
+        axios.post('http://localhost:3000/', services.id , taxes.taxname , taxes.taxpercentage )
+            .then(response => {
+                console.log('Invoice saved successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error saving invoice:', error);
+            })
+    }, [services]);
+    
+
     return (
         <div className='h-screen relative  bg-gray-100'>
             <div className='text-left pt-2'>
@@ -105,7 +120,7 @@ const MainPage = () => {
                                         {service.servicetype}
                                     </th>
                                     <td className="px-6 py-4">
-                                        {service.quantity }
+                                        {service.quantity}
                                     </td>
                                     <td className="px-6 py-4">
                                         {service.sellingprice}
@@ -140,28 +155,28 @@ const MainPage = () => {
             {/* card */}
             <div className='mt-10 ml-5'>
                 {/* {services.map((service, index) => ( */}
-                    <div className='border border-gray-200 w-96'>
-                        <div className='flex justify-between p-2'>
-                            <div className='text-gray-500'>Amount</div>
-                            <div>₹{totalPrice}</div>
-                        </div>
-                        <div className='flex justify-between p-2'>
-                            <div className='text-gray-500'>Discount</div>
-                            <div> ₹{totalDiscount}</div>
-                        </div>
-                        <div className='flex justify-between p-2'>
-                            <div className='text-gray-500'>Tax</div>
-                            <div> ₹{totalTax}</div>
-                        </div>
-                        <div className='flex justify-between p-2'>
-                            <div className='text-gray-500'>Round off</div>
-                            <div>₹ 00</div>
-                        </div>
-                        <div className='flex justify-between p-2'>
-                            <div className='text-gray-500'>Total Amount</div>
-                            <div>  ₹{totalAmount}</div>
-                        </div>
+                <div className='border border-gray-200 w-96'>
+                    <div className='flex justify-between p-2'>
+                        <div className='text-gray-500'>Amount</div>
+                        <div>₹{totalPrice}</div>
                     </div>
+                    <div className='flex justify-between p-2'>
+                        <div className='text-gray-500'>Discount</div>
+                        <div> ₹{totalDiscount}</div>
+                    </div>
+                    <div className='flex justify-between p-2'>
+                        <div className='text-gray-500'>Tax</div>
+                        <div> ₹{totalTax}</div>
+                    </div>
+                    <div className='flex justify-between p-2'>
+                        <div className='text-gray-500'>Round off</div>
+                        <div>₹ 00</div>
+                    </div>
+                    <div className='flex justify-between p-2'>
+                        <div className='text-gray-500'>Total Amount</div>
+                        <div>  ₹{totalAmount}</div>
+                    </div>
+                </div>
                 {/* ))} */}
             </div>
 
@@ -170,7 +185,7 @@ const MainPage = () => {
                      border-blue-400'>
                     Cancel
                 </button>
-                <button className='w-16 h-8 ml-4 font-bold py-1 text-white
+                <button  className='w-16 h-8 ml-4 font-bold py-1 text-white
                      bg-blue-400 border border-blue-400'>
                     Save
                 </button>
