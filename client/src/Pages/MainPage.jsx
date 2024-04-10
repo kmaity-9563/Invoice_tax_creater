@@ -24,7 +24,7 @@ const MainPage = () => {
     useEffect(() => {
         console.log("posting handel")
         console.log( services.id , taxes.taxname , taxes.taxpercentage )
-        axios.post('http://localhost:3000/', services.id , taxes.taxname , taxes.taxpercentage )
+        axios.post('http://localhost:3000/',{ services.id , taxes.taxname , taxes.taxpercentage })
             .then(response => {
                 console.log('Invoice saved successfully:', response.data);
             })
